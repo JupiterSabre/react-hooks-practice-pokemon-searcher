@@ -3,8 +3,17 @@ import PokemonCollection from "./PokemonCollection";
 import PokemonForm from "./PokemonForm";
 import Search from "./Search";
 import { Container } from "semantic-ui-react";
+import { useState } from "react";
+
 
 function PokemonPage({pokeCards}) {
+
+
+//SEARCH BAR: SET STATE AND FUNCTIONALITY FOR FILTERING SEARCH QUERIES
+  const [searchTerm, setSearchTerm] = useState("")
+  const filterPoke = pokeCards.filter((pokeCard) => {
+    return pokeCard.name.toLowerCase().includes(searchTerm.toLowerCase())
+  })
 
   return (
     <Container>
@@ -12,9 +21,9 @@ function PokemonPage({pokeCards}) {
       <br />
       <PokemonForm />
       <br />
-      <Search />
+      <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <br />
-      <PokemonCollection pokeCards={pokeCards} />
+      <PokemonCollection pokeCards={filterPoke} />
     </Container>
   );
 }
